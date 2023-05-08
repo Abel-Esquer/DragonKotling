@@ -50,14 +50,16 @@ class MainActivity : AppCompatActivity() {
         val dragonInfo = item.menuInfo as AdapterContextMenuInfo
         val dragon = listaDragones.getItemAtPosition(dragonInfo.position) as Dragon
 
+
         if(item.itemId == R.id.mnEditar){
-            val intentEditar = Intent(this, DragonFormActivity::class.java)
+            val intentEditar = Intent(this@MainActivity, DragonFormActivity::class.java)
             intentEditar.putExtra("dragon",dragon)
             startActivity(intentEditar)
-            Toast.makeText(this, "Estas editando el dragon "+dragon.nombre, Toast.LENGTH_LONG).show()
+            Toast.makeText(this@MainActivity, "Estas editando el dragon "+dragon.nombre, Toast.LENGTH_LONG).show()
         }else if(item.itemId == R.id.mnEliminar){
-            Toast.makeText(this, "Estas eliminando el usuario "+dragon.nombre, Toast.LENGTH_LONG).show()
+            Toast.makeText(this@MainActivity, "Estas eliminando "+dragon.nombre, Toast.LENGTH_LONG).show()
             eliminarDragon(dragon.id)
+            obtenerDragones()
         }
 
         return true

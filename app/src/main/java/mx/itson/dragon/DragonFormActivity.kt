@@ -58,7 +58,7 @@ class DragonFormActivity : AppCompatActivity(), OnClickListener {
 
                     val intentListado = Intent(this, MainActivity::class.java)
                     startActivity(intentListado)
-                    MainActivity().obtenerDragones()
+                    //MainActivity().obtenerDragones()
                 }catch (ex: Exception){
                     Log.e("Ocurrio un error al guardar", ex.toString())
                 }
