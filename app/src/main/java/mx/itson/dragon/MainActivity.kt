@@ -1,8 +1,13 @@
 package mx.itson.dragon
 
+import DragonAdapter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import androidx.core.view.size
 import mx.itson.dragon.utilerias.RetrofitUtils
 import retrofit2.Call
 import retrofit2.Callback
@@ -10,10 +15,12 @@ import retrofit2.Response
 import mx.itson.dragon.entidades.Dragon as Dragon
 
 class MainActivity : AppCompatActivity() {
+    lateinit var listaDragones : ListView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //obtenerDragones()
+        listaDragones = findViewById<ListView>(R.id.listDragones)
+        obtenerDragones()
         //crearDragon("Cortaleña2", "fuego", "un dragón que usa sus garras para cortar a través de la vegetación")
         //buscarDragones("tipo", "veneno")
         //actualizarDragon(39,"","fuego","")
@@ -23,12 +30,14 @@ class MainActivity : AppCompatActivity() {
 
     //Lista
     fun obtenerDragones(){
+        var elemento = LayoutInflater.from(applicationContext).inflate(R.layout.item_dragon, null)
         val llamada: Call<ArrayList<Dragon>> = RetrofitUtils.getApi().getDragon()
         llamada.enqueue(object: Callback<ArrayList<Dragon>>{
             override fun onResponse(call: Call<ArrayList<Dragon>>, response: Response<ArrayList<Dragon>>) {
                 response.body()
                 val dragon: ArrayList<Dragon>? = response.body()
-                val a = 1;
+
+
             }
 
             override fun onFailure(call: Call<ArrayList<Dragon>>, t: Throwable) {

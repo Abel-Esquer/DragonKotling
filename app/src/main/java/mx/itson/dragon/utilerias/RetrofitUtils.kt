@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitUtils {
     fun getApi(): DragonAPI {
         val gson = GsonBuilder().create()
-        val retrofit  = Retrofit.Builder().baseUrl("http://192.168.0.15:80/dragonAPI/public/")
+        val retrofit  = Retrofit.Builder().baseUrl("http://192.168.0.4:80/dragonAPI/public/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
 
@@ -16,7 +16,7 @@ object RetrofitUtils {
     }
 
     fun getApi2(): DragonAPI {
-        val retrofit  = Retrofit.Builder().baseUrl("http://192.168.0.15:80/dragonAPI/public/")
+        val retrofit  = Retrofit.Builder().baseUrl("http://192.168.0.4:80/dragonAPI/public/")
             .build()
 
         return retrofit.create(DragonAPI::class.java)
