@@ -1,6 +1,7 @@
 package mx.itson.dragon
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -28,6 +29,18 @@ class DragonFormActivity : AppCompatActivity(), OnClickListener {
 
         val btnAceptar = findViewById<Button>(R.id.btnGuardar)
         btnAceptar.setOnClickListener(this)
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+            d = intent.getSerializableExtra("dragon", Dragon::class.java)
+        }else{
+            d = intent.getSerializableExtra("dragon") as Dragon?
+        }
+
+        if(d != null){
+            txtNombre.setText(d!!.nombre)
+            txtTipo.setText(d!!.tipo)
+            txtDescripcion.setText(d!!.descripcion)
+        }
     }
 
     override fun onClick(v: View?) {

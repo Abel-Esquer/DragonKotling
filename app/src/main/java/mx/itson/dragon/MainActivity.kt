@@ -4,15 +4,16 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuItem
+import android.view.*
+import android.widget.AdapterView
+import android.widget.AdapterView.AdapterContextMenuInfo
 import android.widget.ListView
+import android.widget.Toast
 import mx.itson.dragon.utilerias.RetrofitUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import mx.itson.dragon.entidades.Dragon as Dragon
+import mx.itson.dragon.entidades.Dragon
 
 class MainActivity : AppCompatActivity() {
     lateinit var listaDragones : ListView
@@ -21,11 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         listaDragones = findViewById<ListView>(R.id.listDragones)
         obtenerDragones()
-        //crearDragon("Cortaleña2", "fuego", "un dragón que usa sus garras para cortar a través de la vegetación")
-        //buscarDragones("tipo", "veneno")
-        //actualizarDragon(39,"","fuego","")
-        //obtenerDragon(39)
-        //eliminarDragon(39)
+        registerForContextMenu(listaDragones)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -43,9 +40,31 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        menuInflater.inflate(R.menu.dragon_menu, menu)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        val dragonInfo = item.menuInfo as AdapterContextMenuInfo
+        val dragon = listaDragones.getItemAtPosition(dragonInfo.position) as Dragon
+
+        if(item.itemId == R.id.mnEditar){
+            val intentEditar = Intent(this, DragonFormActivity::class.java)
+            intentEditar.putExtra("dragon",dragon)
+            startActivity(intentEditar)
+            Toast.makeText(this, "Estas editando el dragon "+dragon.nombre, Toast.LENGTH_LONG).show()
+        }else if(item.itemId == R.id.mnEliminar){
+            Toast.makeText(this, "Estas eliminando el usuario "+dragon.nombre, Toast.LENGTH_LONG).show()
+            eliminarDragon(dragon.id)
+        }
+
+        return true
+    }
+
     //Lista
     fun obtenerDragones(){
-        var elemento = LayoutInflater.from(applicationContext).inflate(R.layout.item_dragon, null)
         val llamada: Call<ArrayList<Dragon>> = RetrofitUtils.getApi().getDragon()
         llamada.enqueue(object: Callback<ArrayList<Dragon>>{
             override fun onResponse(call: Call<ArrayList<Dragon>>, response: Response<ArrayList<Dragon>>) {
@@ -122,7 +141,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     //Lista
-    fun eliminarDragon(id: Int){
+    fun eliminarDragon(id: Int?){
         val llamada: Call<Boolean> = RetrofitUtils.getApi().deleteDragon(id)
         llamada.enqueue(object: Callback<Boolean> {
             override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {

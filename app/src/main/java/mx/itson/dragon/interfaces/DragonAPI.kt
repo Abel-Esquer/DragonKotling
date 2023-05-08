@@ -41,5 +41,5 @@ interface DragonAPI {
 
     //delete
     @DELETE("dragon/{id}")
-    fun deleteDragon(@Path("id") id: Int) : Call<Boolean>
+    fun deleteDragon(@Path("id") id: Int?) : Call<Boolean>
 }
