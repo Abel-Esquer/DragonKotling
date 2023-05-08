@@ -5,9 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.widget.ArrayAdapter
 import android.widget.ListView
-import androidx.core.view.size
 import mx.itson.dragon.utilerias.RetrofitUtils
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,7 +34,23 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call<ArrayList<Dragon>>, response: Response<ArrayList<Dragon>>) {
                 response.body()
                 val dragon: ArrayList<Dragon>? = response.body()
+                var a = 0;
+                //val listItems = arrayOfNulls<String>(dragon!!.size)5
+                /*
+                val lisdrag : MutableList<Dragon> = mutableListOf()
+                val drag = Dragon()
+                dragon?.forEach(){
+                    drag.nombre = dragon[a].nombre
+                    drag.tipo = dragon[a].tipo
+                    drag.descripcion = dragon[a].descripcion
+                    lisdrag.add(a,drag)
+                    a++
+                }
+                 */
+                val adapter = DragonAdapter(context = applicationContext,dragon)
+                listaDragones.adapter = adapter
 
+                var i = 0
 
             }
 
