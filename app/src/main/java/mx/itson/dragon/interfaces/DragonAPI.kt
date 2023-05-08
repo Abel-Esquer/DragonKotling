@@ -2,14 +2,12 @@ package mx.itson.dragon.interfaces
 
 import mx.itson.dragon.entidades.Dragon
 import retrofit2.Call
-import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 interface DragonAPI {
     //Index
@@ -36,7 +34,7 @@ interface DragonAPI {
     //update
     @FormUrlEncoded
     @POST("dragon/update/{id}")
-    fun updateDragon(@Path("id") id: Int,
+    fun updateDragon(@Path("id") id: Int?,
                      @Field("nombre") nombre: String,
                      @Field("tipo") tipo: String,
                      @Field("descripcion") descripcion: String) : Call<Dragon>

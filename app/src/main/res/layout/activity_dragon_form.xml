@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/wallppr"
+    tools:context=".DragonFormActivity"
+    android:padding="10dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Nombre:"
+        android:textColor="@color/white"
+        android:textSize="30dp"/>
+
+    <EditText
+        android:id="@+id/nombre"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:inputType="text"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Tipo:"
+        android:textColor="@color/white"
+        android:textSize="30dp"/>
+
+    <EditText
+        android:id="@+id/tipo"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:inputType="text"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Descripcion:"
+        android:textColor="@color/white"
+        android:textSize="30dp"/>
+
+    <EditText
+        android:id="@+id/descripcion"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:inputType="text"/>
+
+    <Button
+        android:id="@+id/btnGuardar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dip"
+        android:text="Guardar" />
+
+</LinearLayout>

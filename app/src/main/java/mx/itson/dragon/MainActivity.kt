@@ -1,10 +1,12 @@
 package mx.itson.dragon
 
-import DragonAdapter
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ListView
 import mx.itson.dragon.utilerias.RetrofitUtils
 import retrofit2.Call
@@ -26,32 +28,30 @@ class MainActivity : AppCompatActivity() {
         //eliminarDragon(39)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.app_menu,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.mnBuscarColumna -> buscarDragones("tipo", "veneno")
+            R.id.mnAgregar -> {
+                val intentListado = Intent(this, DragonFormActivity::class.java)
+                startActivity(intentListado)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
     //Lista
     fun obtenerDragones(){
         var elemento = LayoutInflater.from(applicationContext).inflate(R.layout.item_dragon, null)
         val llamada: Call<ArrayList<Dragon>> = RetrofitUtils.getApi().getDragon()
         llamada.enqueue(object: Callback<ArrayList<Dragon>>{
             override fun onResponse(call: Call<ArrayList<Dragon>>, response: Response<ArrayList<Dragon>>) {
-                response.body()
                 val dragon: ArrayList<Dragon>? = response.body()
-                var a = 0;
-                //val listItems = arrayOfNulls<String>(dragon!!.size)5
-                /*
-                val lisdrag : MutableList<Dragon> = mutableListOf()
-                val drag = Dragon()
-                dragon?.forEach(){
-                    drag.nombre = dragon[a].nombre
-                    drag.tipo = dragon[a].tipo
-                    drag.descripcion = dragon[a].descripcion
-                    lisdrag.add(a,drag)
-                    a++
-                }
-                 */
                 val adapter = DragonAdapter(context = applicationContext,dragon)
                 listaDragones.adapter = adapter
-
-                var i = 0
-
             }
 
             override fun onFailure(call: Call<ArrayList<Dragon>>, t: Throwable) {
@@ -80,9 +80,9 @@ class MainActivity : AppCompatActivity() {
         val llamada: Call<ArrayList<Dragon>> = RetrofitUtils.getApi().findDragon(columna, texto)
         llamada.enqueue(object: Callback<ArrayList<Dragon>>{
             override fun onResponse(call: Call<ArrayList<Dragon>>, response: Response<ArrayList<Dragon>>) {
-                response.body()
                 val dragon: ArrayList<Dragon>? = response.body()
-                val a = 1;
+                val adapter = DragonAdapter(context = applicationContext,dragon)
+                listaDragones.adapter = adapter
             }
 
             override fun onFailure(call: Call<ArrayList<Dragon>>, t: Throwable) {
@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     //Lista
-    fun actualizarDragon(id: Int, nombre: String, tipo: String, descripcion: String){
+    fun actualizarDragon(id: Int?, nombre: String, tipo: String, descripcion: String){
         val llamada: Call<Dragon> = RetrofitUtils.getApi().updateDragon(id, nombre, tipo, descripcion)
         llamada.enqueue(object: Callback<Dragon> {
             override fun onResponse(call: Call<Dragon>, response: Response<Dragon>) {

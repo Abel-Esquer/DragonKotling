@@ -1,3 +1,5 @@
+package mx.itson.dragon
+
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
